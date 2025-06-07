@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Gabriel e Livia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #fa0000;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding-bottom: 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .top-header-text {
+            margin-bottom: 8px;
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.2rem;
+            color: white;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 1.8rem;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .time-box {
+            background-color: #fff;
+            color: #fa0000;
+            border: 2px solid #fa0000;
+            padding: 8px;
+            width: 65px;
+            height: 65px;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.4rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            animation: pulse 1s ease-in-out infinite alternate;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .time-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .label {
+            font-size: 0.8rem;
+            color: #fa0000;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.03); }
+        }
+
+        main {
+            padding-top: 40px;
+            text-align: center;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center; /* Centraliza os itens filhos (como .spotify-section) horizontalmente */
+            padding-bottom: 40px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .main-text-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 30px 0 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Estilos para o contêiner das caixas fixas */
+        .fixed-boxes-container {
+            position: fixed; /* Isso mantém a caixa fixa na tela */
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .secret-box {
+            background: white;
+            border: 2px solid #fa0000;
+            border-radius: 0 8px 8px 0;
+            padding: 8px 12px;
+            cursor: pointer;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            font-size: 0.8rem;
+            color: #fa0000;
+            font-weight: bold;
+            text-align: center;
+            width: 120px;
+        }
+
+        .secret-box:hover {
+            background: #fff0f0;
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .main-text {
+            color: #333;
+            padding: 0 20px;
+            text-align: center;
+            padding-left: 145px; /* Ajuste para compensar a caixa fixa */
+            flex-grow: 1;
+        }
+
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            width: 100%;
+            max-width: 900px;
+            padding: 0 20px;
+            box-sizing: border-box;
+            margin-bottom: 60px;
+        }
+
+        .gallery-item {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .gallery-item.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .gallery-item-text {
+            font-size: 1.1rem;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        .gallery-item img {
+            max-width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos para o vídeo responsivo e com tamanho máximo */
+        .video-responsive {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* Proporção 16:9 (altura / largura * 100%) */
+            height: 0;
+            overflow: hidden;
+            border-radius: 8px; /* Mantém o border-radius */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Mantém a sombra */
+            
+            /* Define o tamanho máximo do vídeo para 560px de largura. */
+            /* Isso garantirá que o vídeo não cresça indefinidamente. */
+            max-width: 560px; 
+            margin-left: auto; /* Centraliza o vídeo dentro da div */
+            margin-right: auto; /* Centraliza o vídeo dentro da div */
+        }
+
+        .video-responsive iframe,
+        .video-responsive video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
+        /* Estilos para o Carrossel */
+        .carousel-container {
+            position: relative;
+            max-width: 100%;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-slide {
+            display: none; /* Inicialmente oculto para ser controlado pelo JS */
+            text-align: center;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        /* Botões de navegação do carrossel */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.4);
+            z-index: 1; /* Garante que as setas estejam acima das imagens */
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        /* Indicadores (pontinhos) do carrossel */
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active-dot, .dot:hover {
+            background-color: #fa0000;
+        }
+
+        /* Efeito de fade do carrossel */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        .spotify-section {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin: 40px auto; /* Centraliza horizontalmente e mantém margens verticais */
+        }
+
+        .spotify-text {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .spotify-embed {
+            width: 100%;
+            height: 352px;
+            border-radius: 12px;
+            border: none;
+        }
+
+        /* Media query para telas menores */
+        @media (max-width: 768px) {
+            header {
+                position: static;
+            }
+
+            main {
+                padding-top: 40px;
+            }
+
+            .main-text-container {
+                flex-direction: column;
+                align-items: center;
+                margin-bottom: 20px;
+            }
+
+            .secret-box {
+                width: 120px; 
+                border-radius: 0 8px 8px 0; 
+                box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+            }
+
+            /* Media Query para o carrossel em telas menores */
+            .carousel-slide img {
+                height: 250px;
+            }
+            .prev, .next {
+                padding: 12px;
+                font-size: 14px;
+                margin-top: -18px;
+            }
+            .dot {
+                height: 10px;
+                width: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <p class="top-header-text">Gabriel e Livia</p>
+        <h1>Construindo memórias juntos há :</h1>
+        <div class="countdown" id="countdown"></div>
+    </header>
+
+    <main>
+        <div class="main-text-container">
+            <div class="fixed-boxes-container">
+                <div class="secret-box" id="passo1Box">Passo 1</div>
+            </div>
+            <p class="main-text">
+                Role para ver todos os nossos momentos juntos. Estes são momentos especiais e sempre devem ser lembrados.
+            </p>
+        </div>
+
+        <div class="image-gallery">
+            <div class="gallery-item full-width">
+                <p class="gallery-item-text">
+                    Desde a primeira vez que eu disse eu te amo, eu não queria tirar os olhos de você.
+                </p>
+                <img src="imagens/abb.jpeg" alt="Momento especial 1">
+            </div>
+
+            <div class="gallery-item full-width">
+                <p class="gallery-item-text">
+                    Sempre que te vejo me olhando e com seu sorriso estampado, vejo que é ali que eu
+                    estar, enxergo meu futuro inteiro estampado em seu olhar e em seu sorriso.
+                </p>
+                <div class="carousel-container carousel-2">
+                    <div class="carousel-slide carousel-2-slide fade">
+                        <img src="imagens/WhatsApp Image 2025-06-01 at 19.05.40.jpeg" alt="Momento especial 2 - Imagem 1">
+                    </div>
+                    <div class="carousel-slide carousel-2-slide fade">
+                        <img src="imagens/WhatsApp Image 2025-06-01 at 18.17.53.jpeg" alt="Momento especial 2 - Imagem 2">
+                    </div>
+                    <div class="carousel-slide carousel-2-slide fade">
+                        <img src="imagens/A.jpeg" alt="Momento especial 2 - Imagem 3">
+                    </div>
+                    <div class="carousel-slide carousel-2-slide fade">
+                        <img src="imagens/AA.jpeg" alt="Momento especial 2 - Imagem 3">
+                    </div>
+                    <div class="carousel-slide carousel-2-slide fade">
+                        <img src="imagens/AAA.jpeg" alt="Momento especial 2 - Imagem 3">
+                    </div>
+
+                    <a class="prev" onclick="plusSlides2(-1)"></a>
+                    <a class="next" onclick="plusSlides2(1)"></a>
+
+                    <div style="text-align:center; margin-top: 10px;">
+                        <span class="dot dot-2" onclick="currentSlide2(1)"></span>
+                        <span class="dot dot-2" onclick="currentSlide2(2)"></span>
+                        <span class="dot dot-2" onclick="currentSlide2(3)"></span>
+                        <span class="dot dot-2" onclick="currentSlide2(4)"></span>
+                        <span class="dot dot-2" onclick="currentSlide2(5)"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <p class="gallery-item-text">
+                    Quando nós somos completamente idiotas e compartilhamos do mesmo nerônio eu enxergo em meio a risadas a mulher que me apaixonei.
+                </p>
+                <div class="video-responsive">
+                    <video controls>
+                        <source src="imagens/WhatsApp Video 2025-06-01 at 18.17.53.mp4" type="video/mp4">
+                        Seu navegador não suporta a tag de vídeo.
+                    </video>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <p class="gallery-item-text">
+                    Todos e qualquer momento com você são inesquecíveis, só basta sua presença para me marcar.
+                </p>
+                <img src="imagens/WhatsApp Image 2025-06-07 at 07.54.25.jpeg" alt="Momento especial 5">
+            </div>
+
+            <div class="gallery-item full-width">
+                <p class="gallery-item-text">
+                    Olhei seus olhos refletindo a paisagem do nascer do sol e vi o cenário 
+                    mais bonito que meus olhos já enxergaram.
+                </p>
+                <div class="carousel-container carousel-7">
+                    <div class="carousel-slide carousel-7-slide fade">
+                        <img src="imagens/WhatsApp Image 2025-06-02 at 12.25.10.jpeg" alt="Momento especial 7 - Imagem 1">
+                    </div>
+                    <div class="carousel-slide carousel-7-slide fade">
+                        <img src="imagens/WhatsApp Image 2025-06-02 at 11.23.39.jpeg" alt="Momento especial 7 - Imagem 2">
+                    </div>
+                    <div class="carousel-slide carousel-7-slide fade">
+                        <img src="imagens/WhatsApp Image 2025-06-02 at 11.23.40.jpeg" alt="Momento especial 7 - Imagem 3">
+                    </div>
+                    <div class="carousel-slide carousel-7-slide fade">
+                        <img src="imagens/ab.jpeg" alt="Momento especial 7 - Imagem 3">
+                    </div>
+                    
+                    <a class="prev" onclick="plusSlides7(-1)">❮</a>
+                    <a class="next" onclick="plusSlides7(1)">❯</a>
+
+                    <div style="text-align:center; margin-top: 10px;">
+                        <span class="dot dot-7" onclick="currentSlide7(1)"></span>
+                        <span class="dot dot-7" onclick="currentSlide7(2)"></span>
+                        <span class="dot dot-7" onclick="currentSlide7(3)"></span>
+                        <span class="dot dot-7" onclick="currentSlide7(4)"> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="spotify-section">
+            <p class="spotify-text">Independente de onde estou meu sonho é sempre igual.</p>
+            <iframe class="spotify-embed" src="https://open.spotify.com/embed/track/7eYEQnY6Lzh3Y8jSOt3xEF?utm_source=generator" width="100%" height="352" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </main>
+
+    <script>
+        // Define a data de início (17 de novembro de 2023)
+        const dataInicio = new Date('2023-11-17T00:00:00').getTime();
+
+        const countdownElement = document.getElementById("countdown");
+
+        function updateCountdown() {
+            const agora = new Date().getTime();
+            const diferencaEmMilissegundos = agora - dataInicio;
+
+            const segundosTotais = Math.floor(diferencaEmMilissegundos / 1000);
+            const minutosTotais = Math.floor(segundosTotais / 60);
+            const horasTotais = Math.floor(minutosTotais / 60);
+            const diasTotais = Math.floor(horasTotais / 24);
+
+            const segundosRestantes = segundosTotais % 60;
+            const minutosRestantes = minutosTotais % 60;
+            const horasRestantes = horasTotais % 24;
+
+            const formatarNumero = (num) => num < 10 ? '0' + num : num;
+
+            countdownElement.innerHTML = `
+                <div class="time-box"><div>${diasTotais}</div><div class="label">dias</div></div>
+                <div class="time-box"><div>${formatarNumero(horasRestantes)}</div><div class="label">horas</div></div>
+                <div class="time-box"><div>${formatarNumero(minutosRestantes)}</div><div class="label">min</div></div>
+                <div class="time-box"><div>${formatarNumero(segundosRestantes)}</div><div class="label">seg</div></div>
+            `;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+        document.getElementById('passo1Box').addEventListener('click', function() {
+            window.open('segredo.html', '_blank');
+        });
+
+        // --- CÓDIGO JAVASCRIPT PARA O CARROSSEL DO MOMENTO 2 ---
+        let slideIndex2 = 1;
+
+        function plusSlides2(n) {
+            showSlides2(slideIndex2 += n);
+        }
+
+        function currentSlide2(n) {
+            showSlides2(slideIndex2 = n);
+        }
+
+        function showSlides2(n) {
+            let i;
+            let slides = document.querySelectorAll(".carousel-2-slide");
+            let dots = document.querySelectorAll(".dot-2");
+            let prevArrow = document.querySelector(".carousel-2 .prev");
+            let nextArrow = document.querySelector(".carousel-2 .next");
+
+            if (slides.length === 0) { // Adicionado para lidar com carrosséis vazios
+                if (prevArrow) prevArrow.style.display = "none";
+                if (nextArrow) nextArrow.style.display = "none";
+                dots.forEach(dot => dot.style.display = "none");
+                return;
+            }
+
+            if (n > slides.length) {slideIndex2 = 1}
+            if (n < 1) {slideIndex2 = slides.length}
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+
+            slides[slideIndex2-1].style.display = "block";
+            dots[slideIndex2-1].className += " active-dot";
+
+            // Lógica para esconder/mostrar as setas se houver apenas uma imagem ou nos extremos
+            if (slides.length <= 1) { // Esconde setas e pontos se houver 0 ou 1 imagem
+                if (prevArrow) prevArrow.style.display = "none";
+                if (nextArrow) nextArrow.style.display = "none";
+                dots.forEach(dot => dot.style.display = "none");
+            } else { // Mostra setas e pontos normalmente se houver mais de uma imagem
+                if (prevArrow) prevArrow.style.display = "block";
+                if (nextArrow) nextArrow.style.display = "block";
+                
+                // Esconde a seta 'anterior' na primeira imagem
+                if (slideIndex2 === 1) {
+                    prevArrow.style.display = "none";
+                }
+                // Esconde a seta 'próxima' na última imagem
+                if (slideIndex2 === slides.length) {
+                    nextArrow.style.display = "none";
+                }
+            }
+        }
+        showSlides2(slideIndex2); // Chama a função no carregamento para exibir a primeira imagem
+
+        // --- CÓDIGO JAVASCRIPT PARA O CARROSSEL DO MOMENTO 7 ---
+        let slideIndex7 = 1;
+
+        function plusSlides7(n) {
+            showSlides7(slideIndex7 += n);
+        }
+
+        function currentSlide7(n) {
+            showSlides7(slideIndex7 = n);
+        }
+
+        function showSlides7(n) {
+            let i;
+            let slides = document.querySelectorAll(".carousel-7-slide");
+            let dots = document.querySelectorAll(".dot-7");
+            let prevArrow = document.querySelector(".carousel-7 .prev");
+            let nextArrow = document.querySelector(".carousel-7 .next");
+
+            if (slides.length === 0) { // Adicionado para lidar com carrosséis vazios
+                if (prevArrow) prevArrow.style.display = "none";
+                if (nextArrow) nextArrow.style.display = "none";
+                dots.forEach(dot => dot.style.display = "none");
+                return;
+            }
+
+            if (n > slides.length) {slideIndex7 = 1}
+            if (n < 1) {slideIndex7 = slides.length}
+
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active-dot", "");
+            }
+
+            slides[slideIndex7-1].style.display = "block";
+            dots[slideIndex7-1].className += " active-dot";
+
+            // Lógica para esconder/mostrar as setas se houver apenas uma imagem ou nos extremos
+            if (slides.length <= 1) { // Esconde setas e pontos se houver 0 ou 1 imagem
+                if (prevArrow) prevArrow.style.display = "none";
+                if (nextArrow) nextArrow.style.display = "none";
+                dots.forEach(dot => dot.style.display = "none");
+            } else { // Mostra setas e pontos normalmente se houver mais de uma imagem
+                if (prevArrow) prevArrow.style.display = "block";
+                if (nextArrow) nextArrow.style.display = "block";
+
+                // Esconde a seta 'anterior' na primeira imagem
+                if (slideIndex7 === 1) {
+                    prevArrow.style.display = "none";
+                }
+                // Esconde a seta 'próxima' na última imagem
+                if (slideIndex7 === slides.length) {
+                    nextArrow.style.display = "none";
+                }
+            }
+        }
+        showSlides7(slideIndex7); // Chama a função no carregamento para exibir a primeira imagem
+    </script>
+</body>
+</html>
