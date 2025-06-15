@@ -411,8 +411,8 @@
                         <img src="imagens/AAA.jpeg" alt="Momento especial 2 - Imagem 3">
                     </div>
 
-                    <a class="prev" onclick="plusSlides2(-1)"></a>
-                    <a class="next" onclick="plusSlides2(1)"></a>
+                    <a class="prev carousel-2-prev" onclick="plusSlides2(-1)">❮</a>
+                    <a class="next carousel-2-next" onclick="plusSlides2(1)">❯</a>
 
                     <div style="text-align:center; margin-top: 10px;">
                         <span class="dot dot-2" onclick="currentSlide2(1)"></span>
@@ -460,8 +460,8 @@
                         <img src="imagens/ab.jpeg" alt="Momento especial 7 - Imagem 3">
                     </div>
                     
-                    <a class="prev" onclick="plusSlides7(-1)">❮</a>
-                    <a class="next" onclick="plusSlides7(1)">❯</a>
+                    <a class="prev carousel-7-prev" onclick="plusSlides7(-1)">❮</a>
+                    <a class="next carousel-7-next" onclick="plusSlides7(1)">❯</a>
 
                     <div style="text-align:center; margin-top: 10px;">
                         <span class="dot dot-7" onclick="currentSlide7(1)"></span>
@@ -529,9 +529,11 @@
         function showSlides2(n) {
             let i;
             let slides = document.querySelectorAll(".carousel-2-slide");
-            let dots = document.querySelectorAll(".dot-2");
-            let prevArrow = document.querySelector(".carousel-2 .prev");
+            // Adicionado .carousel-2 para ser mais específico no seletor das setas
+            let prevArrow = document.querySelector(".carousel-2 .prev"); 
             let nextArrow = document.querySelector(".carousel-2 .next");
+            let dots = document.querySelectorAll(".dot-2");
+
 
             if (slides.length === 0) { // Adicionado para lidar com carrosséis vazios
                 if (prevArrow) prevArrow.style.display = "none";
@@ -588,9 +590,10 @@
         function showSlides7(n) {
             let i;
             let slides = document.querySelectorAll(".carousel-7-slide");
-            let dots = document.querySelectorAll(".dot-7");
+            // Adicionado .carousel-7 para ser mais específico no seletor das setas
             let prevArrow = document.querySelector(".carousel-7 .prev");
             let nextArrow = document.querySelector(".carousel-7 .next");
+            let dots = document.querySelectorAll(".dot-7");
 
             if (slides.length === 0) { // Adicionado para lidar com carrosséis vazios
                 if (prevArrow) prevArrow.style.display = "none";
